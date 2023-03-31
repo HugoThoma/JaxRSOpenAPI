@@ -1,3 +1,13 @@
+## Comment run le projet :
+
+1. Il faut lancer la classe ``RestServer``
+
+2. Il faut ensuite accéder au lien suivant : http://localhost:8080/api/
+
+Vous serez alors amené sur la documentation de l'application.
+
+
+
 ## JaxRS + openAPI
 
 1. Import this project in your IDE, 
