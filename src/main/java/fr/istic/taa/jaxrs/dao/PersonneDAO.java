@@ -6,7 +6,7 @@ import fr.istic.taa.jaxrs.domain.Personne;
 
 import java.util.List;
 
-public class PersonneDAO extends GenericDaoJpaImpl<Fiche, Long>  {
+public class PersonneDAO extends GenericDaoJpaImpl<Personne, Long>  {
     public List<Personne> getPersonneByName(String name){
 
         return this.entityManager.createQuery("select p from Personne as p where p.name = :name")
