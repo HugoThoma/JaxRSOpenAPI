@@ -5,10 +5,13 @@ import io.swagger.v3.oas.annotations.Parameter;
 import fr.istic.taa.jaxrs.domain.*;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/fiche")
-@Produces({"application/json"})
+//@Produces({"application/json","application/xml"})
+@Produces(MediaType.APPLICATION_JSON)
 public class FicheRessource {
 
     @GET
@@ -40,6 +43,19 @@ public class FicheRessource {
             feature.setTags(fiche.getTags());
             return feature;
         }
+
+    }
+    @GET
+    @Path("/all")
+    public Response getAllFiches() {
+        FicheDAO ficheDAO = new FicheDAO();
+        List<Fiche> fiches = ficheDAO.getAllFiches();
+        return Response
+                .ok(fiches)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .header("Access-Control-Allow-Headers", "Content-Type")
+                .build();
 
     }
 

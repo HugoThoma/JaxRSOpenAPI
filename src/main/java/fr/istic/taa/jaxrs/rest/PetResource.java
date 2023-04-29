@@ -11,6 +11,8 @@ import javax.ws.rs.core.Response;
 import fr.istic.taa.jaxrs.domain.Pet;
 import io.swagger.v3.oas.annotations.Parameter;
 
+import java.util.ArrayList;
+
 @Path("/pet")
 @Produces({"application/json", "application/xml"})
 public class PetResource {
@@ -20,6 +22,20 @@ public class PetResource {
   public Pet getPetById(@PathParam("petId") Long petId)  {
       // return pet
       return new Pet();
+  }
+  @GET
+  @Path("/pets")
+  public Response getAllPets()  {
+    // return pet
+    ArrayList<Pet> pets= new ArrayList<>();
+    pets.add(new Pet());pets.add(new Pet());pets.add(new Pet());
+    return Response
+            .ok(pets)
+            .header("Access-Control-Allow-Origin", "*")
+            .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+            .header("Access-Control-Allow-Headers", "Content-Type")
+            .build();
+
   }
 
   @POST

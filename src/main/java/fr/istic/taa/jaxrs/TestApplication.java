@@ -19,8 +19,14 @@ package fr.istic.taa.jaxrs;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.OPTIONS;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Response;
 
+import fr.istic.taa.jaxrs.rest.FicheRessource;
+import fr.istic.taa.jaxrs.rest.PersonneRessource;
 import fr.istic.taa.jaxrs.rest.PetResource;
 import fr.istic.taa.jaxrs.rest.SwaggerResource;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
@@ -36,8 +42,24 @@ public class TestApplication extends Application {
         clazzes.add(PetResource.class);
         clazzes.add(OpenApiResource.class);
         clazzes.add(SwaggerResource.class);
-
+        clazzes.add(PersonneRessource.class);
+        clazzes.add(FicheRessource.class);
         return clazzes;
+    }
+    @OPTIONS
+    @Path("{path : .*}")
+    public Response handleCORSRequest(
+            @HeaderParam("Access-Control-Request-Method") final String requestMethod,
+            @HeaderParam("Access-Control-Request-Headers") final String requestHeaders) {
+        final Response.ResponseBuilder retValue = Response.ok();
+        if (requestHeaders != null) {
+            retValue.header("Access-Control-Allow-Headers", requestHeaders);
+        }
+        if (requestMethod != null) {
+            retValue.header("Access-Control-Allow-Methods", requestMethod);
+        }
+        retValue.header("Access-Control-Allow-Origin", "*");
+        return retValue.build();
     }
 
 }

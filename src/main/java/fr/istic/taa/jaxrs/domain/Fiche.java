@@ -72,8 +72,7 @@ public  abstract class  Fiche {
 
     @Override
     public String toString() {
-        return "Ticket [id=" + id + ", name=" + title + ", user="
-                + user.getName() + "]";
+        return "Ticket [id=" + id + ", name=" + title; //+ ", user=" + user.getName() + "]";
     }
     //@OneToMany(mappedBy = "tag", cascade = CascadeType.PERSIST)
     @XmlElement(name = "tag")
