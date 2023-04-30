@@ -1,3 +1,11 @@
+# Partie Back du TP10
+
+## Binôme
+
+Maria Rosane BENKHELIL
+
+Hugo THOMAS
+
 ## Comment run le projet :
 
 1. Il faut lancer la classe ``RestServer``
@@ -32,6 +40,8 @@ Vous pouvez alors tester les différentes fonctions des fichiers ressources à p
 - getAllPersonnes : Permet de récupérer toutes les personnes et leurs informations. Pour l'utiliser : ``http://localhost:8080/personne/all``
 - addFiche : Permet d'ajouter une personne au format *user* à la BDD. Pour l'utiliser : ``http://localhost:8080/personne/addPersonne/nom``
 
+
+---
 
 ## JaxRS + openAPI
 
