@@ -3,6 +3,7 @@ package fr.istic.taa.jaxrs.rest;
 import fr.istic.taa.jaxrs.dao.EntityManagerHelper;
 import fr.istic.taa.jaxrs.dao.FicheDAO;
 import fr.istic.taa.jaxrs.dao.PersonneDAO;
+import fr.istic.taa.jaxrs.dto.FicheDTO;
 import io.swagger.v3.oas.annotations.Parameter;
 import fr.istic.taa.jaxrs.domain.*;
 
@@ -83,26 +84,21 @@ public class FicheRessource {
         return Response.ok().entity("SUCCESS").build();
     }*/
     @POST
-    @Path("/addFiche") // Utilisation : http://localhost:8080/fiche/addFiche?type=bug&title=MonTitre&description=MaDescription&userID=1
-    @Consumes("application/json")
-    public Response addFiche(
-            @QueryParam("type") String type,
-            @QueryParam("title") String title,
-            @QueryParam("description") String description,
-            @QueryParam("userID") Long userID) {
-        // add Fiche
+    @Path("/addFiche")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addFiche(FicheDTO ficheDTO) {
         FicheDAO ficheDAO = new FicheDAO();
         Fiche fiche;
-        if(type.equalsIgnoreCase("bug")){
-            fiche = new BugFiche(title);
-        }else{
-            fiche = new FeatureRequestFiche(title);
+        if (ficheDTO.getType().equalsIgnoreCase("bug")) {
+            fiche = new BugFiche(ficheDTO.getTitle());
+        } else {
+            fiche = new FeatureRequestFiche(ficheDTO.getTitle());
         }
 
-        fiche.setDescription(description);
+        fiche.setDescription(ficheDTO.getDescription());
 
         PersonneDAO personneDAO = new PersonneDAO();
-        Personne user = personneDAO.getPersonneByID(userID);
+        Personne user = personneDAO.getPersonneByID(ficheDTO.getUserID());
 
         fiche.setUser((User) user);
 

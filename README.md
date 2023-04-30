@@ -6,6 +6,22 @@
 
 Vous serez alors amené sur la documentation de l'application.
 
+Vous pouvez alors tester les différentes fonctions des fichiers ressources à partir de l'API.
+
+
+## Liste des fonctions des fichiers ressources :
+
+### FicheRessource :
+
+- getFicheById : permet d'obtenir les détails d'une fiche. Pour l'utiliser : ``http://localhost:8080/fiche/1`` par exemple
+- getAllFiches : Permet de récupérer toutes les fiches et leurs informations. Pour l'utiliser : ``http://localhost:8080/fiche/all``
+- addFiche : Permet d'ajouter une fiche à la BDD. Pour l'utiliser : ``http://localhost:8080/fiche/addFiche?type=bug&title=tentative%20post&description=test%20fiche%20bug%20V2&userID=12``
+
+### PersonneRessource :
+
+- getPersonneById : permet d'obtenir les détails d'une personne. Pour l'utiliser : ``http://localhost:8080/personne/1`` par exemple
+- getAllPersonnes : Permet de récupérer toutes les personnes et leurs informations. Pour l'utiliser : ``http://localhost:8080/personne/all``
+- addFiche : Permet d'ajouter une personne au format *user* à la BDD. Pour l'utiliser : ``http://localhost:8080/personne/addPersonne/nom``
 
 
 ## JaxRS + openAPI
