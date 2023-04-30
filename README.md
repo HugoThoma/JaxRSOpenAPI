@@ -15,7 +15,16 @@ Vous pouvez alors tester les différentes fonctions des fichiers ressources à p
 
 - getFicheById : permet d'obtenir les détails d'une fiche. Pour l'utiliser : ``http://localhost:8080/fiche/1`` par exemple
 - getAllFiches : Permet de récupérer toutes les fiches et leurs informations. Pour l'utiliser : ``http://localhost:8080/fiche/all``
-- addFiche : Permet d'ajouter une fiche à la BDD. Pour l'utiliser : ``http://localhost:8080/fiche/addFiche?type=bug&title=tentative%20post&description=test%20fiche%20bug%20V2&userID=12``
+- addFiche : Permet d'ajouter une fiche à la BDD. Pour l'utiliser : ``curl -X 'POST' \
+  'http://localhost:8080/fiche/addFiche' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "type": "string",
+  "title": "string",
+  "description": "string",
+  "userID": 0
+  }'``
 
 ### PersonneRessource :
 

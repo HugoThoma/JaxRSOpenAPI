@@ -10,13 +10,6 @@ public class FicheDTO {
         return type;
     }
 
-    public FicheDTO(String type, String title, String description, Long userID) {
-        this.type = type;
-        this.title = title;
-        this.description = description;
-        this.userID = userID;
-    }
-
     public void setType(String type) {
         this.type = type;
     }
