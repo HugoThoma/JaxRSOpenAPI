@@ -1,9 +1,13 @@
 package fr.istic.taa.jaxrs.rest;
 
+import fr.istic.taa.jaxrs.dao.EntityManagerHelper;
 import fr.istic.taa.jaxrs.dao.FicheDAO;
+import fr.istic.taa.jaxrs.dao.PersonneDAO;
 import io.swagger.v3.oas.annotations.Parameter;
 import fr.istic.taa.jaxrs.domain.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -16,7 +20,7 @@ public class FicheRessource {
 
     @GET
     @Path("/{ficheId}")
-    public Fiche getFicheById(@PathParam("ficheId") Long ficheId) {
+    public Response getFicheById(@PathParam("ficheId") Long ficheId) {
         FicheDAO ficheDAO = new FicheDAO();
         Fiche fiche = ficheDAO.getFicheByID(ficheId);
         String type = fiche instanceof BugFiche ? "Bug" : "Feature";
@@ -30,7 +34,12 @@ public class FicheRessource {
             bug.setDatePriseenCharge(fiche.getDatePriseenCharge());
             bug.setDateCloture(fiche.getDateCloture());
             bug.setTags(fiche.getTags());
-            return bug;
+            return Response
+                    .ok(bug)
+                    .header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                    .header("Access-Control-Allow-Headers", "Content-Type")
+                    .build();
         } else {
 
             FeatureRequestFiche feature = new FeatureRequestFiche(fiche.getTitle(),fiche.getUser());
@@ -41,7 +50,12 @@ public class FicheRessource {
             feature.setDatePriseenCharge(fiche.getDatePriseenCharge());
             feature.setDateCloture(fiche.getDateCloture());
             feature.setTags(fiche.getTags());
-            return feature;
+            return Response
+                    .ok(feature)
+                    .header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                    .header("Access-Control-Allow-Headers", "Content-Type")
+                    .build();
         }
 
     }
@@ -59,6 +73,7 @@ public class FicheRessource {
 
     }
 
+    /*
     @POST
     @Consumes("application/json")
     public Response addFiche(
@@ -66,6 +81,36 @@ public class FicheRessource {
         // add pet
 
         return Response.ok().entity("SUCCESS").build();
+    }*/
+    @POST
+    @Path("/addFiche/{type}/{title}/{description}/{userID}")
+    @Consumes("application/json")
+    public Response addFiche(
+            @PathParam("type") String type, @PathParam("title") String title, @PathParam("description") String description, @PathParam("userID") Long userID) {
+        // add Fiche
+        FicheDAO ficheDAO = new FicheDAO();
+        Fiche fiche;
+        if(type == "bug"){
+            fiche = new BugFiche(title);
+        }else{
+            fiche = new FeatureRequestFiche(title);
+        }
+
+        fiche.setDescription(description);
+
+        PersonneDAO personneDAO = new PersonneDAO();
+        Personne user = personneDAO.getPersonneByID(userID);
+
+        fiche.setUser((User) user);
+
+        EntityManager manager = EntityManagerHelper.getEntityManager();
+        EntityTransaction tx = manager.getTransaction();
+        tx.begin();
+        ficheDAO.save(fiche);
+        tx.commit();
+        manager.close();
+
+        return Response.ok().entity("ADD Fiche SUCCESS : " + fiche).build();
     }
 
 }

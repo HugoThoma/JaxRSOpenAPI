@@ -12,7 +12,7 @@ public class PersonneDAO extends GenericDaoJpaImpl<Personne, Long>  {
         return this.entityManager.createQuery("select p from Personne as p where p.name = :name")
                 .setParameter("name", name).getResultList();
     }
-    public List<Personne> getAllPersonne(){
+    public List<Personne> getAllPersonnes(){
 
         return this.entityManager.createQuery("select p from Personne as p", Personne.class)
                 .getResultList();
