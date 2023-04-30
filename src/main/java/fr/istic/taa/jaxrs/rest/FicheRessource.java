@@ -83,14 +83,17 @@ public class FicheRessource {
         return Response.ok().entity("SUCCESS").build();
     }*/
     @POST
-    @Path("/addFiche/{type}/{title}/{description}/{userID}")
+    @Path("/addFiche") // Utilisation : http://localhost:8080/fiche/addFiche?type=bug&title=MonTitre&description=MaDescription&userID=1
     @Consumes("application/json")
     public Response addFiche(
-            @PathParam("type") String type, @PathParam("title") String title, @PathParam("description") String description, @PathParam("userID") Long userID) {
+            @QueryParam("type") String type,
+            @QueryParam("title") String title,
+            @QueryParam("description") String description,
+            @QueryParam("userID") Long userID) {
         // add Fiche
         FicheDAO ficheDAO = new FicheDAO();
         Fiche fiche;
-        if(type == "bug"){
+        if(type.equalsIgnoreCase("bug")){
             fiche = new BugFiche(title);
         }else{
             fiche = new FeatureRequestFiche(title);
@@ -112,5 +115,7 @@ public class FicheRessource {
 
         return Response.ok().entity("ADD Fiche SUCCESS : " + fiche).build();
     }
+
+
 
 }
