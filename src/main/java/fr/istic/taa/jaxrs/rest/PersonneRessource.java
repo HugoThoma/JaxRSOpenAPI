@@ -1,7 +1,9 @@
 package fr.istic.taa.jaxrs.rest;
 
 
+import fr.istic.taa.jaxrs.dao.FicheDAO;
 import fr.istic.taa.jaxrs.dao.PersonneDAO;
+import fr.istic.taa.jaxrs.domain.Fiche;
 import fr.istic.taa.jaxrs.domain.Personne;
 import fr.istic.taa.jaxrs.domain.SupportMember;
 import fr.istic.taa.jaxrs.domain.User;
@@ -9,6 +11,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/personne")
 @Produces({"application/json"})
@@ -32,6 +35,19 @@ public class PersonneRessource {
             support.setName(personne.getName());
             return support;
         }
+
+    }
+    @GET
+    @Path("/all")
+    public Response getAllPersonnes() {
+        PersonneDAO personneDAO = new PersonneDAO();
+        List<Personne> fiches = personneDAO.getAllPersonne();
+        return Response
+                .ok(fiches)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .header("Access-Control-Allow-Headers", "Content-Type")
+                .build();
 
     }
 
